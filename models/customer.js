@@ -20,7 +20,7 @@ const Customer = mongoose.model('Customer', new mongoose.Schema({
     } 
 }));
 
-// Validtation help function
+// Validation help function
 function validateCustomers(customer) {
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),

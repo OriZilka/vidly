@@ -1,9 +1,6 @@
 const {Customer, validate} = require('../models/customer');
-// const mongoose = require('mongoose'); @@@@@@@@@@@@@@@@@@@@@@@@@
 const express = require('express');
 const router = express.Router();
-
-// router.use(express.json());
 
 // Get all customers
 router.get('/', async (req,res) => {
@@ -11,14 +8,14 @@ router.get('/', async (req,res) => {
     res.send(customers);
 });
 
-// Get a specific genre
+// Get a specific customer
 router.get('/:id', async (req,res) => {
     const customer = await Customer.findById(req.params.id);
     if (!customer) return res.status(404).send('The customer with the given ID isn\'t found'); // If doesn't exist, return 404
     res.send(customer);
 });
 
-// Create a new genre
+// Create a new customer
 router.post('/', async (req,res) => { 
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message); // If invalid, return 400 - bad request
@@ -40,7 +37,7 @@ router.post('/', async (req,res) => {
     res.send(customer);
 });
 
-// Update genre 
+// Update customer 
 router.put('/:id', async (req,res) => {
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message); // If invalid, return 400 - bad request
@@ -57,7 +54,7 @@ router.put('/:id', async (req,res) => {
     res.send(customer); // return the updated customer
 });
 
-// Delete genre
+// Delete customer
 router.delete('/:id', async (req,res) => {   
     const customer = await Customer.findByIdAndDelete(req.params.id); 
     if (!customer) return res.status(404).send('The customer with the given ID isn\'t found'); // If doesn't exist, return 404
