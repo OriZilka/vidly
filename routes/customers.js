@@ -21,14 +21,14 @@ router.post('/', async (req,res) => {
     if(error) return res.status(400).send(error.details[0].message); // If invalid, return 400 - bad request
     
     // creation 
-    let customer = new Customer({
+    const customer = new Customer({
         name: req.body.name,
         phone: req.body.phone,
         isGold: req.body.isGold
     });
 
     try {
-        customer = await customer.save();
+        await customer.save();
     }
     catch(ex) {
         for(field in ex.errors)

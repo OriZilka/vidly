@@ -25,7 +25,7 @@ router.post('/', async (req,res) => {
     if (!genre) return res.status(404).send('The genre with the given ID isn\'t found'); // If doesn't exist, return 404
 
     // creation 
-    let movie = new Movie({
+    const movie = new Movie({
         title: req.body.title,
         genre: {
             _id: genre._id,
@@ -36,7 +36,7 @@ router.post('/', async (req,res) => {
     });
 
     try {
-        movie = await movie.save();
+        await movie.save();
     }
     catch(ex) {
         for(field in ex.errors)
