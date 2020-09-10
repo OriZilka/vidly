@@ -41,7 +41,8 @@ function validateUser(user) {
         {
             name: Joi.string().min(2).max(50).required(),
             email: Joi.string().min(5).max(255).required().email(),
-            password: Joi.string().min(5).max(255).regex(/.*[A-Z].*/).regex(/.*[0-9].*/).required()
+            password: Joi.string().min(5).max(255).regex(/.*[A-Z].*/)
+                .regex(/.*[0-9].*/).required()
             // password: passwordComplexity(passwordcomplexityOptions) //.required()
         });
     return schema.validate(user);
