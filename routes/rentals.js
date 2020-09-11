@@ -14,14 +14,14 @@ router.get('/', async (req,res) => {
     res.send(rentals);
 });
 
-// Get a specific movie
+// Get a specific rental
 router.get('/:id', async (req,res) => {
     const rental = await Rental.findById(req.params.id);
     if (!rental) return res.status(404).send('The rental with the given ID isn\'t found'); // If doesn't exist, return 404
     res.send(rental);
 });
 
-// Create a new movie
+// Create a new rental
 router.post('/', async (req,res) => { 
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message); // If invalid, return 400 - bad request
@@ -66,6 +66,5 @@ router.post('/', async (req,res) => {
 // // Update rental 
 
 // // Delete rental
-
 
 module.exports = router;

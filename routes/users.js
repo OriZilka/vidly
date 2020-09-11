@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const {User, validate} = require('../models/user');
+
 const express = require('express');
 const router = express.Router();
 
@@ -31,8 +32,8 @@ router.post('/', async (req,res) => {
             console.log(ex.errors[field].message);
     }
     
-    res.send(_.pick(user, [ '_id', 'name', 'email' ]));
-    
+    const token = user.generateAuthToken();
+    res.header('x-authentication-token', token).send(_.pick(user, [ '_id', 'name', 'email' ]));
 });
 
 // Delete user
