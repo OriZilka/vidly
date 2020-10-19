@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Get all movies
 router.get('/', async (req,res) => {
+    throw new Error('Could not get the Movies.');
     const movies = await Movie.find().sort({ title: 1 });
     res.send(movies);
 });
