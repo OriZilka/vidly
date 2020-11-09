@@ -5,6 +5,8 @@ const Fawn = require('fawn');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const validateObjectId = require('../middleware/validateObjectId');
+
 
 Fawn.init(mongoose);
 
@@ -15,7 +17,7 @@ router.get('/', async (req,res) => {
 });
 
 // Get a specific rental
-router.get('/:id', async (req,res) => {
+router.get('/:id', validateObjectId, async (req,res) => {
     const rental = await Rental.findById(req.params.id);
     if (!rental) return res.status(404).send('The rental with the given ID isn\'t found'); // If doesn't exist, return 404
     res.send(rental);

@@ -1,6 +1,7 @@
 const {Customer, validate} = require('../models/customer');
 const express = require('express');
 const router = express.Router();
+const validateObjectId = require('../middleware/validateObjectId');
 
 // Get all customers
 router.get('/', async (req,res) => {
@@ -9,7 +10,7 @@ router.get('/', async (req,res) => {
 });
 
 // Get a specific customer
-router.get('/:id', async (req,res) => {
+router.get('/:id', validateObjectId, async (req,res) => {
     const customer = await Customer.findById(req.params.id);
     if (!customer) return res.status(404).send('The customer with the given ID isn\'t found'); // If doesn't exist, return 404
     res.send(customer);
@@ -38,7 +39,7 @@ router.post('/', async (req,res) => {
 });
 
 // Update customer 
-router.put('/:id', async (req,res) => {
+router.put('/:id', validateObjectId, async (req,res) => {
     const { error } = validate(req.body);
     if(error) return res.status(400).send(error.details[0].message); // If invalid, return 400 - bad request
     
@@ -55,7 +56,7 @@ router.put('/:id', async (req,res) => {
 });
 
 // Delete customer
-router.delete('/:id', async (req,res) => {   
+router.delete('/:id', validateObjectId, async (req,res) => {   
     const customer = await Customer.findByIdAndDelete(req.params.id); 
     if (!customer) return res.status(404).send('The customer with the given ID isn\'t found'); // If doesn't exist, return 404
     res.send(customer);

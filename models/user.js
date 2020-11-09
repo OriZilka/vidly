@@ -1,8 +1,7 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const Joi = require('@hapi/joi');;
-// const passwordComplexity = require('joi-password-complexity');
+const Joi = require('@hapi/joi');
 
 const userSchema = new mongoose.Schema({
     name: {

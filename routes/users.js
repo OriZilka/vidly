@@ -1,9 +1,11 @@
 const auth = require('../middleware/auth');
 const _ = require('lodash');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const {User, validate} = require('../models/user');
 const express = require('express');
 const router = express.Router();
+const validateObjectId = require('../middleware/validateObjectId');
+
 
 // Getting info about the current user
 router.get('/me', auth, async (req,res) => {
@@ -21,8 +23,8 @@ router.post('/', async (req,res) => {
     
     // creation 
     user = new User(_.pick(req.body, [ 'name', 'email', 'password' ]));
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // user.password = await bcrypt.hash(user.password, salt);
 
     try {
         await user.save();
@@ -37,7 +39,7 @@ router.post('/', async (req,res) => {
 });
 
 // Delete user
-router.delete('/:id', async (req,res) => {   
+router.delete('/:id', validateObjectId, async (req,res) => {   
     const user = await User.findByIdAndDelete(req.params.id); 
     if (!user) return res.status(404).send('The user with the given ID isn\'t found'); // If doesn't exist, return 404
     res.send(user);

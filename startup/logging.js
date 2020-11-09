@@ -7,7 +7,6 @@ const logger = (createLogger({
         format.timestamp(),
         format.prettyPrint(),        
         format.colorize()
-        // format.json()
     ),
     transports: [
         new transports.Console(),
